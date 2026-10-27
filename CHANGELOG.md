@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.3](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.2...v1.0.3) (2026-10-27)
+
+### :repeat: Chores
+
+* **repo-templates:** sync ([3f4dbfd](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/3f4dbfdc50f7ed26ab8acc1cbb0659aae137824c))
+
 ## [1.0.2](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.1...v1.0.2) (2026-10-27)
 
 ### :bug: Fixes
