@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.1](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.0...v1.0.1) (2026-10-27)
+
+### :bug: Fixes
+
+* **deps:** update dependency guzzlehttp/guzzle to ^7.15.2 [security] ([4a39f22](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/4a39f227a151b013d5e6c6e92cea5f191fa6fee3))
+
 ## [1.0.0] (2026-10-27)
 
 ### :sparkles: Features
