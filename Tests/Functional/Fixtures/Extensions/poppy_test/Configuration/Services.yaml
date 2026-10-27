@@ -1,0 +1,17 @@
+# SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+# SPDX-License-Identifier: MIT
+#
+# Replaces the two ports a functional test cannot use for real: the network
+# (Personal Agents' metadata documents) and the clock.
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Koh\Poppy\Http\JsonFetcher:
+    factory: ['Koh\Poppy\Typo3\Tests\Functional\Support\TestDoubles', 'fetcher']
+  Psr\Clock\ClockInterface:
+    factory: ['Koh\Poppy\Typo3\Tests\Functional\Support\TestDoubles', 'clock']
+  Koh\Poppy\Typo3\Tests\Functional\Support\WhoAmIMiddleware:
+    public: true

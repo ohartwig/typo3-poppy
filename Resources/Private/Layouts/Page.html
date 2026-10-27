@@ -1,0 +1,39 @@
+<f:comment>
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+
+Frame of every Poppy page. Replace it, with the pages, through the site
+setting poppy.templateRootPath.
+</f:comment>
+<!DOCTYPE html>
+<html lang="{f:if(condition: '{language}', then: language, else: 'en')}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex">
+    <title><f:render section="Title" optional="true" /></title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 0; background: #f6f7f9; color: #1d2128; }
+        main { max-width: 36rem; margin: 3rem auto; padding: 2rem; background: #fff; border-radius: .5rem; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+        h1 { font-size: 1.4rem; margin-top: 0; }
+        .muted { color: #5b6270; font-size: .9rem; }
+        .agent { display: flex; gap: .75rem; align-items: center; margin: 1rem 0 1.5rem; }
+        .agent img { width: 48px; height: 48px; border-radius: .4rem; }
+        fieldset { border: 0; padding: 0; margin: 0 0 1.25rem; }
+        label { display: block; margin: .35rem 0; }
+        input[type=text] { font-size: 1.3rem; padding: .5rem; width: 100%; box-sizing: border-box; text-transform: uppercase; letter-spacing: .1em; }
+        .actions { display: flex; gap: .5rem; margin-top: 1.25rem; }
+        button { font: inherit; padding: .55rem 1.1rem; border-radius: .35rem; border: 1px solid #1d2128; background: #fff; cursor: pointer; }
+        button.primary { background: #1d2128; color: #fff; }
+        .alert { background: #fff4e5; border: 1px solid #f0c27a; padding: .6rem .8rem; border-radius: .35rem; }
+        ul.connections { list-style: none; padding: 0; }
+        ul.connections li { display: flex; justify-content: space-between; gap: 1rem; padding: .75rem 0; border-top: 1px solid #e3e6ea; }
+        code { font-size: .8rem; color: #5b6270; }
+    </style>
+</head>
+<body>
+<main>
+    <f:render section="Main" />
+</main>
+</body>
+</html>

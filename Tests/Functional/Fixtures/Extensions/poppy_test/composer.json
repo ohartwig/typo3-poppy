@@ -1,0 +1,14 @@
+{
+    "name": "koh/poppy-test",
+    "description": "Test doubles for the koh/typo3-poppy functional tests: a fake HTTP client for Personal Agents' documents and a frozen clock.",
+    "type": "typo3-cms-extension",
+    "license": "MIT",
+    "require": {
+        "koh/typo3-poppy": "*"
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "poppy_test"
+        }
+    }
+}

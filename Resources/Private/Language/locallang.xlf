@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+-->
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="EXT:koh_poppy/Resources/Private/Language/locallang.xlf" product-name="koh_poppy">
+        <body>
+            <trans-unit id="scope.poppy_read" resname="scope.poppy_read">
+                <source>See your account, your orders and your data on this site</source>
+            </trans-unit>
+            <trans-unit id="scope.poppy_write" resname="scope.poppy_write">
+                <source>Act on your behalf and change things in your account</source>
+            </trans-unit>
+            <trans-unit id="consent.title" resname="consent.title">
+                <source>Connect a personal agent</source>
+            </trans-unit>
+            <trans-unit id="consent.intro" resname="consent.intro">
+                <source>A personal agent wants to act for you at %1$s. You are signed in as %2$s.</source>
+            </trans-unit>
+            <trans-unit id="consent.publishedOn" resname="consent.publishedOn">
+                <source>published on %1$s</source>
+            </trans-unit>
+            <trans-unit id="consent.scopes" resname="consent.scopes">
+                <source>What the agent may do</source>
+            </trans-unit>
+            <trans-unit id="consent.returnTo" resname="consent.returnTo">
+                <source>Afterwards you return to %1$s.</source>
+            </trans-unit>
+            <trans-unit id="consent.revokeHint" resname="consent.revokeHint">
+                <source>You can disconnect the agent at any time on /poppy/account/agents.</source>
+            </trans-unit>
+            <trans-unit id="consent.approve" resname="consent.approve">
+                <source>Allow</source>
+            </trans-unit>
+            <trans-unit id="consent.deny" resname="consent.deny">
+                <source>Decline</source>
+            </trans-unit>
+            <trans-unit id="device.title" resname="device.title">
+                <source>Enter code</source>
+            </trans-unit>
+            <trans-unit id="device.intro" resname="device.intro">
+                <source>Enter the code your personal agent shows for %1$s.</source>
+            </trans-unit>
+            <trans-unit id="device.code" resname="device.code">
+                <source>Code</source>
+            </trans-unit>
+            <trans-unit id="device.continue" resname="device.continue">
+                <source>Continue</source>
+            </trans-unit>
+            <trans-unit id="device.checkCode" resname="device.checkCode">
+                <source>Compare the code %1$s with the one your agent shows. Only allow if you started this sign-in yourself.</source>
+            </trans-unit>
+            <trans-unit id="device.unknown" resname="device.unknown">
+                <source>This code is unknown or has expired.</source>
+            </trans-unit>
+            <trans-unit id="device.tooMany" resname="device.tooMany">
+                <source>Too many attempts. Please wait a few minutes.</source>
+            </trans-unit>
+            <trans-unit id="device.approved" resname="device.approved">
+                <source>Agent connected</source>
+            </trans-unit>
+            <trans-unit id="device.approvedText" resname="device.approvedText">
+                <source>%1$s can now act for you within what you allowed. You can close this window.</source>
+            </trans-unit>
+            <trans-unit id="device.denied" resname="device.denied">
+                <source>Declined</source>
+            </trans-unit>
+            <trans-unit id="device.deniedText" resname="device.deniedText">
+                <source>%1$s gets no access to your account.</source>
+            </trans-unit>
+            <trans-unit id="account.title" resname="account.title">
+                <source>Connected agents</source>
+            </trans-unit>
+            <trans-unit id="account.intro" resname="account.intro">
+                <source>Personal agents you connected to your account. Disconnecting ends their access at once.</source>
+            </trans-unit>
+            <trans-unit id="account.none" resname="account.none">
+                <source>No agent is connected to your account.</source>
+            </trans-unit>
+            <trans-unit id="account.since" resname="account.since">
+                <source>connected since %1$s</source>
+            </trans-unit>
+            <trans-unit id="account.disconnect" resname="account.disconnect">
+                <source>Disconnect</source>
+            </trans-unit>
+            <trans-unit id="error.title" resname="error.title">
+                <source>That did not work</source>
+            </trans-unit>
+            <trans-unit id="feedback.title" resname="feedback.title">
+                <source>Feedback from personal agents</source>
+            </trans-unit>
+            <trans-unit id="feedback.intro" resname="feedback.intro">
+                <source>Tasks agents could not do on these sites. The text is the agents' own and unverified.</source>
+            </trans-unit>
+            <trans-unit id="feedback.received" resname="feedback.received">
+                <source>Received</source>
+            </trans-unit>
+            <trans-unit id="feedback.task" resname="feedback.task">
+                <source>Task</source>
+            </trans-unit>
+            <trans-unit id="feedback.description" resname="feedback.description">
+                <source>Description</source>
+            </trans-unit>
+            <trans-unit id="feedback.agent" resname="feedback.agent">
+                <source>Agent</source>
+            </trans-unit>
+            <trans-unit id="feedback.none" resname="feedback.none">
+                <source>No feedback yet.</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

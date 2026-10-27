@@ -1,0 +1,7 @@
+# SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+# SPDX-License-Identifier: MIT
+#
+# Listing this set in a site's `dependencies:` is what makes the site speak
+# Poppy. Installing the extension alone publishes nothing.
+name: koh/poppy
+label: 'Personal Agent Protocol (Poppy)'

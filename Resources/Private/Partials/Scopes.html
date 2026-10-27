@@ -1,0 +1,20 @@
+<f:comment>
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+
+One checkbox per requested scope, all ticked: the user may approve fewer.
+</f:comment>
+<fieldset>
+    <legend><strong><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.scopes" /></strong></legend>
+    <f:for each="{scopes}" as="scope" iteration="i">
+        <label>
+            <input type="checkbox" name="scopes[]" value="{scope}" checked>
+            <f:if condition="{scope} == 'poppy:read'">
+                <f:then><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:scope.poppy_read" /></f:then>
+                <f:else if="{scope} == 'poppy:write'"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:scope.poppy_write" /></f:else>
+                <f:else>{scope}</f:else>
+            </f:if>
+            <code>{scope}</code>
+        </label>
+    </f:for>
+</fieldset>

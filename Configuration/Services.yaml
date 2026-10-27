@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+# SPDX-License-Identifier: MIT
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Koh\Poppy\Typo3\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Configuration/SiteSettings.php'
+      - '../Classes/Poppy/Company.php'
+      - '../Classes/Http/PoppyClientException.php'
+
+  # --- koh/poppy ports, built from TYPO3 services ----------------------------
+  Psr\Clock\ClockInterface:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'clock']
+
+  Koh\Poppy\Storage\Dbal\DbalStorage:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'storage']
+  Koh\Poppy\Server\Storage\PoppyStorage: '@Koh\Poppy\Storage\Dbal\DbalStorage'
+
+  Koh\Poppy\Storage\Dbal\DbalReplayGuard:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'replayGuard']
+  Koh\Poppy\Replay\ReplayGuard: '@Koh\Poppy\Storage\Dbal\DbalReplayGuard'
+
+  Koh\Poppy\Storage\Dbal\DbalFeedbackSink:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'feedback']
+  Koh\Poppy\Feedback\FeedbackSink: '@Koh\Poppy\Storage\Dbal\DbalFeedbackSink'
+
+  Koh\Poppy\Http\JsonFetcher:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'fetcher']
+
+  Koh\Poppy\Server\RateLimiter:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'rateLimiter']
+
+  Koh\Poppy\Dpop\NonceSource:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'nonces']
+
+  Koh\Poppy\Server\BrowserCookie:
+    factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'browserCookie']
+
+  Koh\Poppy\Typo3\Poppy\CompanyResolver:
+    public: true
+    arguments:
+      $responseFactory: '@Psr\Http\Message\ResponseFactoryInterface'
+      $streamFactory: '@Psr\Http\Message\StreamFactoryInterface'

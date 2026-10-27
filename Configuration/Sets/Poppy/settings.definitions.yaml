@@ -1,0 +1,93 @@
+# SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+# SPDX-License-Identifier: MIT
+categories:
+  poppy:
+    label: 'Personal Agent Protocol (Poppy)'
+  poppy.signIn:
+    label: 'Sign-in'
+    parent: poppy
+  poppy.advanced:
+    label: 'Advanced'
+    parent: poppy
+
+settings:
+  poppy.enabled:
+    label: 'Publish /.well-known/poppy.json'
+    category: poppy
+    type: bool
+    default: true
+  poppy.server:
+    label: 'Run the authorization server'
+    description: 'Sessions, browser sessions and feedback for Personal Agents. Off declares the website alone (web: {}), which is a complete answer as well. Needs an HTTPS site base on a host of its own.'
+    category: poppy
+    type: bool
+    default: true
+  poppy.organizationName:
+    label: 'Organisation name'
+    description: 'The name Personal Agents show their users. Empty: the site''s website title.'
+    category: poppy
+    type: string
+    default: ''
+  poppy.browserSession:
+    label: 'Let an agent''s browser join its Session'
+    category: poppy
+    type: bool
+    default: true
+  poppy.feedback:
+    label: 'Accept feedback about tasks the site does not offer'
+    description: 'Listed in the backend under Site Management > Agent feedback.'
+    category: poppy
+    type: bool
+    default: true
+  poppy.loginPage:
+    label: 'Login page (uid)'
+    description: 'A page with the felogin plugin. Users return through redirect_url, so felogin needs redirectMode "getpost". 0: no sign-in, signed-out Sessions only.'
+    category: poppy.signIn
+    type: int
+    default: 0
+  poppy.signIn.directScopes:
+    label: 'Direct Sign-In: scopes'
+    description: 'Comma-separated, e.g. "poppy:read, poppy:write". Empty turns Direct Sign-In off. Needs a login page.'
+    category: poppy.signIn
+    type: string
+    default: ''
+  poppy.signIn.deviceScopes:
+    label: 'Device Sign-In: scopes'
+    description: 'Comma-separated, e.g. "poppy:read". Empty turns Device Sign-In off. Needs a login page.'
+    category: poppy.signIn
+    type: string
+    default: ''
+  poppy.sessionTokenTtl:
+    label: 'Session Token lifetime (seconds)'
+    category: poppy.advanced
+    type: int
+    default: 3600
+  poppy.accountTokenTtl:
+    label: 'Account Token lifetime (seconds)'
+    description: '0: until the user disconnects the agent.'
+    category: poppy.advanced
+    type: int
+    default: 7776000
+  poppy.clients.allow:
+    label: 'Accept only these agents'
+    description: 'Comma-separated client_id URLs or hosts. Empty: every agent not blocked.'
+    category: poppy.advanced
+    type: string
+    default: ''
+  poppy.clients.block:
+    label: 'Refuse these agents'
+    description: 'Comma-separated client_id URLs or hosts.'
+    category: poppy.advanced
+    type: string
+    default: ''
+  poppy.dpopNonces:
+    label: 'Require DPoP nonces'
+    category: poppy.advanced
+    type: bool
+    default: false
+  poppy.templateRootPath:
+    label: 'Template root path'
+    description: 'A directory with Fluid templates of the same names as EXT:koh_poppy/Resources/Private/Templates/Pages, to match the site''s design.'
+    category: poppy.advanced
+    type: string
+    default: ''

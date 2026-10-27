@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+-->
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="EXT:koh_poppy/Resources/Private/Language/locallang_mod.xlf" product-name="koh_poppy">
+        <body>
+            <trans-unit id="title" resname="title"><source>Agent feedback</source></trans-unit>
+            <trans-unit id="description" resname="description"><source>Tasks Personal Agents could not do on these sites (Poppy feedback).</source></trans-unit>
+            <trans-unit id="short_description" resname="short_description"><source>Personal Agent feedback</source></trans-unit>
+        </body>
+    </file>
+</xliff>
