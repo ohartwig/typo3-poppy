@@ -1,0 +1,25 @@
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+
+Device Sign-In consent. Keep the POST with _token, user_code, decision and
+scopes[] when replacing it.
+-->
+<f:layout name="Page" />
+<f:section name="Title"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></f:section>
+<f:section name="Main">
+    <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></h1>
+    <f:render partial="Agent" arguments="{agent: agent, agentHost: agentHost}" />
+    <p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.intro" arguments="{0: company.name, 1: userName}" /></p>
+    <p class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.checkCode" arguments="{0: code}" /></p>
+    <form method="post" action="{action}">
+        <input type="hidden" name="_token" value="{token}">
+        <input type="hidden" name="user_code" value="{code}">
+        <f:render partial="Scopes" arguments="{scopes: scopes}" />
+        <p class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.revokeHint" /></p>
+        <div class="actions">
+            <button type="submit" name="decision" value="approve" class="primary"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.approve" /></button>
+            <button type="submit" name="decision" value="deny"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.deny" /></button>
+        </div>
+    </form>
+</f:section>

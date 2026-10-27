@@ -1,0 +1,34 @@
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+
+Connected Personal Agents. Keep the POST to {action} with _token and
+client_id when replacing it.
+-->
+<f:layout name="Page" />
+<f:section name="Title"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.title" /></f:section>
+<f:section name="Main">
+    <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.title" /></h1>
+    <p class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.intro" /></p>
+    <f:if condition="{connections}">
+        <f:then>
+            <ul class="connections">
+                <f:for each="{connections}" as="connection">
+                    <li>
+                        <div>
+                            <strong>{connection.host}</strong><br>
+                            <code>{connection.clientId}</code><br>
+                            <span class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.since" arguments="{0: '{connection.since -> f:format.date(format: \'d.m.Y\')}'}" /> · <f:for each="{connection.scopes}" as="scope" iteration="i">{scope}<f:if condition="{i.isLast}"><f:else>, </f:else></f:if></f:for></span>
+                        </div>
+                        <form method="post" action="{action}">
+                            <input type="hidden" name="_token" value="{token}">
+                            <input type="hidden" name="client_id" value="{connection.clientId}">
+                            <button type="submit"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.disconnect" /></button>
+                        </form>
+                    </li>
+                </f:for>
+            </ul>
+        </f:then>
+        <f:else><p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:account.none" /></p></f:else>
+    </f:if>
+</f:section>

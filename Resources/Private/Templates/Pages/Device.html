@@ -1,0 +1,16 @@
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+-->
+<f:layout name="Page" />
+<f:section name="Title"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.title" /></f:section>
+<f:section name="Main">
+    <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.title" /></h1>
+    <p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.intro" arguments="{0: company.name}" /></p>
+    <f:if condition="{error}"><p class="alert"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.{error}" /></p></f:if>
+    <form method="post" action="{action}">
+        <label for="poppy-user-code"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.code" /></label>
+        <input type="text" id="poppy-user-code" name="user_code" value="{code}" autocomplete="one-time-code" maxlength="12" required placeholder="ABCD-EFGH">
+        <div class="actions"><button type="submit" class="primary"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.continue" /></button></div>
+    </form>
+</f:section>

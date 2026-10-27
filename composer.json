@@ -1,0 +1,86 @@
+{
+    "name": "koh/typo3-poppy",
+    "description": "Personal Agent Protocol (Poppy) for TYPO3: poppy.json per site, a per-site issuer, Sessions for Personal Agents, browser sessions, optional website-user Direct and Device Sign-In, and agent feedback in the backend.",
+    "type": "typo3-cms-extension",
+    "license": "MIT",
+    "keywords": [
+        "TYPO3",
+        "extension",
+        "poppy",
+        "personal-agent-protocol",
+        "ai-agent",
+        "oauth",
+        "dpop"
+    ],
+    "authors": [
+        {
+            "name": "Kai Ole Hartwig",
+            "email": "mail@ole-hartwig.eu"
+        }
+    ],
+    "homepage": "https://ole-hartwig.eu/open-source",
+    "support": {
+        "issues": "https://github.com/ohartwig/typo3-poppy/issues",
+        "source": "https://github.com/ohartwig/typo3-poppy"
+    },
+    "require": {
+        "php": "^8.3",
+        "doctrine/dbal": "^4.0",
+        "guzzlehttp/guzzle": "^7.8",
+        "koh/poppy": "^1.1",
+        "psr/clock": "^1.0",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0",
+        "psr/http-server-handler": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "symfony/clock": "^7.4 || ^8.0",
+        "symfony/console": "^7.4 || ^8.0",
+        "symfony/rate-limiter": "^7.4 || ^8.0",
+        "typo3/cms-backend": "^14.0",
+        "typo3/cms-core": "^14.0",
+        "typo3/cms-fluid": "^14.0",
+        "typo3/cms-frontend": "^14.0"
+    },
+    "require-dev": {
+        "infection/infection": "^0.35.4",
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^11.5 || ^12.0 || ^13.0",
+        "typo3/testing-framework": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Koh\\Poppy\\Typo3\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Koh\\Poppy\\Typo3\\Tests\\": "Tests/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://git.ole-hartwig.eu/api/v4/group/1091/-/packages/composer/packages.json",
+            "only": [
+                "koh/*"
+            ]
+        }
+    ],
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "koh_poppy"
+        },
+        "branch-alias": {
+            "dev-main": "1.0-dev"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true,
+            "infection/extension-installer": true
+        }
+    }
+}

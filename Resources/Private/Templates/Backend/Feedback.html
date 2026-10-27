@@ -1,0 +1,35 @@
+<!--
+SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
+SPDX-License-Identifier: MIT
+
+Feedback from Personal Agents. The text is the agents' own and unverified:
+Fluid escapes it, nothing acts on it.
+-->
+<f:layout name="Module" />
+<f:section name="Content">
+    <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.title" /></h1>
+    <p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.intro" /></p>
+    <div class="table-fit">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.received" /></th>
+                    <th><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.task" /></th>
+                    <th><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.description" /></th>
+                    <th><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.agent" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <f:for each="{reports}" as="report">
+                    <tr>
+                        <td><f:format.date format="d.m.Y H:i">{report.received_at}</f:format.date></td>
+                        <td>{report.task}</td>
+                        <td>{report.description}</td>
+                        <td>{report.client_id}</td>
+                    </tr>
+                </f:for>
+                <f:if condition="{reports}"><f:else><tr><td colspan="4"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:feedback.none" /></td></tr></f:else></f:if>
+            </tbody>
+        </table>
+    </div>
+</f:section>
