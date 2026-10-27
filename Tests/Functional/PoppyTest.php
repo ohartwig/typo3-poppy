@@ -415,7 +415,7 @@ final class PoppyTest extends FunctionalTestCase
         preg_match('/name="_token" value="([^"]+)"/', $html, $match);
         self::assertArrayHasKey(1, $match, $html);
 
-        return html_entity_decode($match[1]);
+        return html_entity_decode($match[1] ?? '');
     }
 
     private function clock(): \Koh\Poppy\Typo3\Tests\Functional\Support\FrozenClock
