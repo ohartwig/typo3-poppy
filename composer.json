@@ -24,7 +24,7 @@
         "source": "https://github.com/ohartwig/typo3-poppy"
     },
     "require": {
-        "php": "^8.3",
+        "php": "^8.5.12",
         "doctrine/dbal": "^4.0",
         "guzzlehttp/guzzle": "^7.16.1",
         "koh/poppy": "^1.1",
