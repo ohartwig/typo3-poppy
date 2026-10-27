@@ -1,11 +1,11 @@
-<!--
+<f:comment>
 SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
 SPDX-License-Identifier: MIT
--->
+</f:comment>
 <div class="agent">
     <f:if condition="{agent.logoUri}"><img src="{agent.logoUri}" alt="" referrerpolicy="no-referrer"></f:if>
     <div>
-        <strong>{agent.displayName}</strong><br>
+        <strong>{agentName}</strong><br>
         <span class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.publishedOn" arguments="{0: agentHost}" /></span>
     </div>
 </div>

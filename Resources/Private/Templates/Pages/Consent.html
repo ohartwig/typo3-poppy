@@ -1,16 +1,16 @@
-<!--
+<f:comment>
 SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
 SPDX-License-Identifier: MIT
 
 Direct Sign-In consent. Keep the POST to {action} with _token, approve and
 scopes[] when replacing it. The agent's name and logo are its own claims; the
 host its metadata is published on is what was checked, and is always shown.
--->
+</f:comment>
 <f:layout name="Page" />
 <f:section name="Title"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></f:section>
 <f:section name="Main">
     <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></h1>
-    <f:render partial="Agent" arguments="{agent: agent, agentHost: agentHost}" />
+    <f:render partial="Agent" arguments="{agent: agent, agentName: agentName, agentHost: agentHost}" />
     <p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.intro" arguments="{0: company.name, 1: userName}" /></p>
     <form method="post" action="{action}">
         <input type="hidden" name="_token" value="{token}">

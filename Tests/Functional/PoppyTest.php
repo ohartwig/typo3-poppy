@@ -237,6 +237,195 @@ final class PoppyTest extends FunctionalTestCase
         self::assertSame('DENY', $unknown->getHeaderLine('X-Frame-Options'));
     }
 
+    #[Test]
+    public function directSignInFromConsentToSignedInSession(): void
+    {
+        $this->writeSite(['poppy.loginPage' => 2, 'poppy.signIn.directScopes' => 'poppy:read, poppy:write']);
+        $sessionId = $this->startSession('usr_1')['session_id'];
+        self::assertIsString($sessionId);
+        $login = $this->loginCookie(7);
+        $verifier = Base64Url::encode(random_bytes(32));
+
+        $start = $this->fetchAs($login, '/poppy/authorize?' . http_build_query([
+            'response_type' => 'code',
+            'client_id' => $this->agent->clientId,
+            'redirect_uri' => $this->agent->redirectUri,
+            'scope' => 'poppy:read poppy:write',
+            'state' => 'st',
+            'code_challenge' => Base64Url::encode(hash('sha256', $verifier, true)),
+            'code_challenge_method' => 'S256',
+        ]));
+        self::assertSame(303, $start->getStatusCode());
+        $consentPath = substr($start->getHeaderLine('Location'), strlen(self::BASE));
+
+        $page = $this->fetchAs($login, $consentPath);
+        self::assertSame(200, $page->getStatusCode(), (string) $page->getBody());
+        $html = (string) $page->getBody();
+        self::assertStringContainsString('Example Agent', $html);
+        self::assertStringContainsString('agent.example', $html);
+        self::assertSame('DENY', $page->getHeaderLine('X-Frame-Options'));
+
+        $forged = $this->postAs($login, $consentPath, ['_token' => 'wrong', 'approve' => '1', 'scopes' => ['poppy:read']]);
+        self::assertSame(400, $forged->getStatusCode());
+
+        $approved = $this->postAs($login, $consentPath, ['_token' => $this->formToken($html), 'approve' => '1', 'scopes' => ['poppy:read']]);
+        self::assertSame(303, $approved->getStatusCode(), (string) $approved->getBody());
+        $redirect = $approved->getHeaderLine('Location');
+        self::assertStringStartsWith($this->agent->redirectUri . '?code=', $redirect);
+        self::assertStringContainsString('iss=' . rawurlencode(self::ISSUER), $redirect);
+        parse_str((string) parse_url($redirect, PHP_URL_QUERY), $query);
+        self::assertIsString($query['code'] ?? null);
+
+        $now = $this->now();
+        $tokens = $this->json($this->post('/poppy/token', [
+            'grant_type' => 'authorization_code',
+            'code' => $query['code'],
+            'redirect_uri' => $this->agent->redirectUri,
+            'code_verifier' => $verifier,
+            'session_id' => $sessionId,
+        ] + $this->agent->clientAuthentication(self::ISSUER, $now), $this->agent->dpopProof('POST', self::ISSUER . '/token', $now)));
+        self::assertTrue($tokens['signed_in']);
+        self::assertSame('poppy:read', $tokens['scope']);
+        self::assertIsString($tokens['refresh_token']);
+
+        // Sign-out through the revocation endpoint.
+        $revoked = $this->post('/poppy/revoke', ['token' => $tokens['refresh_token']] + $this->agent->clientAuthentication(self::ISSUER, $this->now()));
+        self::assertSame(200, $revoked->getStatusCode());
+        self::assertFalse($this->service(PoppyStorage::class)->findSession($sessionId)?->isSignedIn() ?? true);
+    }
+
+    #[Test]
+    public function declinedConsentGoesBackWithAccessDenied(): void
+    {
+        $this->writeSite(['poppy.loginPage' => 2, 'poppy.signIn.directScopes' => 'poppy:read']);
+        $login = $this->loginCookie(7);
+        $start = $this->fetchAs($login, '/poppy/authorize?' . http_build_query([
+            'response_type' => 'code',
+            'client_id' => $this->agent->clientId,
+            'redirect_uri' => $this->agent->redirectUri,
+            'scope' => 'poppy:read',
+            'code_challenge' => Base64Url::encode(hash('sha256', str_repeat('v', 43), true)),
+            'code_challenge_method' => 'S256',
+        ]));
+        $consentPath = substr($start->getHeaderLine('Location'), strlen(self::BASE));
+        $html = (string) $this->fetchAs($login, $consentPath)->getBody();
+
+        $declined = $this->postAs($login, $consentPath, ['_token' => $this->formToken($html), 'approve' => '0']);
+        self::assertStringStartsWith($this->agent->redirectUri . '?error=access_denied', $declined->getHeaderLine('Location'));
+
+        $expired = $this->fetchAs($login, '/poppy/authorize/consent?request=unknown');
+        self::assertSame(400, $expired->getStatusCode());
+    }
+
+    #[Test]
+    public function deviceSignInFromCodeToSignedInSession(): void
+    {
+        $this->writeSite(['poppy.loginPage' => 2, 'poppy.signIn.deviceScopes' => 'poppy:read']);
+        $sessionId = $this->startSession('usr_1')['session_id'];
+        self::assertIsString($sessionId);
+        $device = $this->json($this->post('/poppy/device_authorization', ['scope' => 'poppy:read'] + $this->agent->clientAuthentication(self::ISSUER, $this->now())));
+        self::assertIsString($device['user_code']);
+        self::assertIsString($device['device_code']);
+        $login = $this->loginCookie(7);
+
+        self::assertSame(303, $this->fetch('/poppy/device?user_code=' . $device['user_code'])->getStatusCode(), 'signed out: to the login page');
+        self::assertSame(200, $this->fetchAs($login, '/poppy/device')->getStatusCode());
+        self::assertSame(404, $this->fetchAs($login, '/poppy/device?user_code=BCDF-GHJK')->getStatusCode());
+
+        $consent = $this->fetchAs($login, '/poppy/device?user_code=' . strtolower($device['user_code']));
+        self::assertSame(200, $consent->getStatusCode());
+        $html = (string) $consent->getBody();
+        self::assertStringContainsString('Example Agent', $html);
+
+        self::assertSame(400, $this->postAs($login, '/poppy/device', ['user_code' => $device['user_code'], 'decision' => 'approve', '_token' => 'wrong'])->getStatusCode());
+        $done = $this->postAs($login, '/poppy/device', ['user_code' => $device['user_code'], 'decision' => 'approve', 'scopes' => ['poppy:read'], '_token' => $this->formToken($html)]);
+        self::assertSame(200, $done->getStatusCode());
+
+        $this->clock()->advance(6);
+        $now = $this->now();
+        $tokens = $this->json($this->post('/poppy/token', [
+            'grant_type' => 'urn:ietf:params:oauth:grant-type:device_code',
+            'device_code' => $device['device_code'],
+            'session_id' => $sessionId,
+        ] + $this->agent->clientAuthentication(self::ISSUER, $now), $this->agent->dpopProof('POST', self::ISSUER . '/token', $now)));
+        self::assertTrue($tokens['signed_in']);
+    }
+
+    #[Test]
+    public function aSignedInUserSeesAndDisconnectsAgents(): void
+    {
+        $this->writeSite(['poppy.loginPage' => 2]);
+        $storage = $this->service(PoppyStorage::class);
+        $now = $this->now();
+        $session = new Session('ses_1', $this->agent->clientId, 'usr_1', $now, $now->modify('+1 day'));
+        $token = new AccountToken('act_1', hash('sha256', 'pat_x'), $this->agent->clientId, 'usr_1', '7', ['poppy:read'], $now);
+        $storage->saveAccountToken($token);
+        $storage->saveSession($session->signIn($token, ['poppy:read']));
+        $login = $this->loginCookie(7);
+
+        $page = $this->fetchAs($login, '/poppy/account/agents');
+        self::assertSame(200, $page->getStatusCode());
+        $html = (string) $page->getBody();
+        self::assertStringContainsString($this->agent->clientId, $html);
+
+        self::assertSame(400, $this->postAs($login, '/poppy/account/agents', ['client_id' => $this->agent->clientId, '_token' => 'wrong'])->getStatusCode());
+        $done = $this->postAs($login, '/poppy/account/agents', ['client_id' => $this->agent->clientId, '_token' => $this->formToken($html)]);
+        self::assertSame(303, $done->getStatusCode());
+        self::assertNotNull($storage->findAccountToken('act_1')?->revokedAt);
+    }
+
+    #[Test]
+    public function thePurgeCommandRemovesExpiredRecords(): void
+    {
+        $storage = $this->service(PoppyStorage::class);
+        $now = $this->now();
+        $storage->saveSession(new Session('ses_old', 'c', 'u', $now->modify('-2 days'), $now->modify('-1 day')));
+
+        $tester = new \Symfony\Component\Console\Tester\CommandTester($this->service(\Koh\Poppy\Typo3\Command\PurgeCommand::class));
+        self::assertSame(0, $tester->execute([]));
+        self::assertNull($storage->findSession('ses_old'));
+    }
+
+    private function loginCookie(int $userId): string
+    {
+        $manager = \TYPO3\CMS\Core\Session\UserSessionManager::create('FE');
+        $session = $manager->elevateToFixatedUserSession($manager->createAnonymousSession(), $userId);
+
+        return $session->getJwt();
+    }
+
+    private function fetchAs(string $login, string $path): ResponseInterface
+    {
+        return $this->executeFrontendSubRequest((new InternalRequest(self::BASE . $path))->withCookieParams(['fe_typo_user' => $login]));
+    }
+
+    /** @param array<string, mixed> $form */
+    private function postAs(string $login, string $path, array $form): ResponseInterface
+    {
+        return $this->executeFrontendSubRequest((new InternalRequest(self::BASE . $path))
+            ->withMethod('POST')
+            ->withCookieParams(['fe_typo_user' => $login])
+            ->withHeader('Content-Type', 'application/x-www-form-urlencoded')
+            ->withParsedBody($form)
+            ->withBody($this->stream(http_build_query($form))));
+    }
+
+    private function formToken(string $html): string
+    {
+        preg_match('/name="_token" value="([^"]+)"/', $html, $match);
+        self::assertArrayHasKey(1, $match, $html);
+
+        return html_entity_decode($match[1]);
+    }
+
+    private function clock(): \Koh\Poppy\Typo3\Tests\Functional\Support\FrozenClock
+    {
+        $clock = TestDoubles::clock();
+        self::assertInstanceOf(\Koh\Poppy\Typo3\Tests\Functional\Support\FrozenClock::class, $clock);
+
+        return $clock;
+    }
+
     /**
      * @template T of object
      *

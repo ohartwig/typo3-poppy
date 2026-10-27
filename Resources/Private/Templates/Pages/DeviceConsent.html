@@ -1,15 +1,15 @@
-<!--
+<f:comment>
 SPDX-FileCopyrightText: 2026 Kai Ole Hartwig
 SPDX-License-Identifier: MIT
 
 Device Sign-In consent. Keep the POST with _token, user_code, decision and
 scopes[] when replacing it.
--->
+</f:comment>
 <f:layout name="Page" />
 <f:section name="Title"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></f:section>
 <f:section name="Main">
     <h1><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.title" /></h1>
-    <f:render partial="Agent" arguments="{agent: agent, agentHost: agentHost}" />
+    <f:render partial="Agent" arguments="{agent: agent, agentName: agentName, agentHost: agentHost}" />
     <p><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:consent.intro" arguments="{0: company.name, 1: userName}" /></p>
     <p class="muted"><f:translate key="LLL:EXT:koh_poppy/Resources/Private/Language/locallang.xlf:device.checkCode" arguments="{0: code}" /></p>
     <form method="post" action="{action}">

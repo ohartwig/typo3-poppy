@@ -127,6 +127,7 @@ final readonly class PagesMiddleware implements MiddlewareInterface
 
         return $this->view->render($request, 'Consent', [
             'agent' => $authorization->client,
+            'agentName' => $authorization->client->displayName(),
             'agentHost' => parse_url($authorization->client->clientId, PHP_URL_HOST),
             'scopes' => $authorization->scopes,
             'company' => $company->document->toArray()['organization'],
@@ -186,11 +187,13 @@ final readonly class PagesMiddleware implements MiddlewareInterface
                 $outcome = 'denied';
             }
 
-            return $this->view->render($request, 'DeviceDone', $view + ['agent' => $agent, 'outcome' => $outcome]);
+            return $this->view->render($request, 'DeviceDone', $view + ['agent' => $agent, 'agentName' => $agent->displayName(), 'outcome' => $outcome]);
         }
 
         return $this->view->render($request, 'DeviceConsent', $view + [
             'agent' => $agent,
+            'agentName' => $agent->displayName(),
+            'code' => $authorization->userCode,
             'agentHost' => parse_url($agent->clientId, PHP_URL_HOST),
             'scopes' => $authorization->requestedScopes,
             'userName' => $user->user['username'] ?? '',

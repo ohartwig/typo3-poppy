@@ -30,9 +30,6 @@
 
     // TYPO3 extensions keep the PHPUnit configuration under Tests/, and
     // Infection looks for it next to its own config unless told otherwise.
-    "phpUnit": {
-        "configDir": "Tests"
-    },
 
     "logs": {
         "text": "var/infection/infection.log",
