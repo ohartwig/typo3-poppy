@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.6](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.5...v1.0.6) (2026-11-03)
+
+### :bug: Fixes
+
+* **deps:** update dependency psr/clock to ^1.0.0 ([7fbd063](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/7fbd063ac448bb636a4612e4843887d23a76020f))
+
 ## [1.0.5](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.4...v1.0.5) (2026-10-30)
 
 ### :repeat: Chores
