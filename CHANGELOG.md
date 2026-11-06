@@ -2,6 +2,17 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.8](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.7...v1.0.8) (2026-11-06)
+
+### :repeat: Chores
+
+* **deps:** update dependency phpstan/phpstan to ^2.3.5 ([b40b282](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/b40b282a1202aced648a203e964d729ef9b62412))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.137-8.5 ([2e1e24d](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/2e1e24d7e0572d754c271efbd3615229c120d881))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.136-8.5 ([1928efe](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/1928efe1da6db8167b124add2e77c7ce55475f4d))
+* **repo-templates:** sync ([9bee8b3](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/9bee8b38030c68d8167f6bbbcd7a5ce89b23a812))
+* **repo-templates:** sync ([a97aa17](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/a97aa174587e22bbdfe960d71c2a19cb8413ac95))
+* **repo-templates:** sync ([b009296](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/b0092964e320b5cd5352dbfcd4f8b8624ec65279))
+
 ## [1.0.7](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.6...v1.0.7) (2026-11-03)
 
 ### :repeat: Chores
