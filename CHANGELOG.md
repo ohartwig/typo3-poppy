@@ -2,6 +2,28 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.9](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.8...v1.0.9) (2026-11-09)
+
+### :repeat: Chores
+
+* **deps:** update dependency infection/infection to ^0.35.10 ([c12dfba](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/c12dfbaa6ff1fff3b3d77f56946ba1669ec51bb4))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.173-8.5 ([fdacb53](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/fdacb5307ac59af7c4d8254df381ca899146c1e8))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.172-8.5 ([953145f](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/953145f59d9051e2188b2cefd47b8607ef938b85))
+* **repo-templates:** sync ([4f36d8a](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/4f36d8a7bcb1b98913a6fab9385a162f9365277a))
+* **repo-templates:** sync ([0b1a54a](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/0b1a54abb7d0ead00b08d369fcfced5e5c557bc8))
+* **repo-templates:** sync ([ce77a26](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/ce77a262e243f4ebc7485e641448d382f94af425))
+* **repo-templates:** sync ([fe5cb05](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/fe5cb05fe10ab692d1520dd087b6cee019e9d709))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.150-8.5 ([da58c60](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/da58c60289f74d124e1e0525da64d101ee77a924))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.149-8.5 ([a51dc45](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/a51dc45baa9d119af9d65cd37f1344bd337f8260))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.148-8.5 ([d1f8fbd](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/d1f8fbd5d81d3f4f8eaec0b53fa9cf7855c50065))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.147-8.5 ([e7529fa](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/e7529fa3ea158698b924b491bc54c770f3c77dc1))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.146-8.5 ([908e858](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/908e8589e74ec1d2b0f75204330a1c0deeaf0466))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.144-8.5 ([4c19533](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/4c195339ee2a9ce95dad2fac17807855872e1b1f))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.143-8.5 ([332294f](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/332294f87213676db59afa8e3b1124e510577f43))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.142-8.5 ([72387cf](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/72387cf88a1f3e5ff689db4d23613ed256213fa7))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.139-8.5 ([c510fc7](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/c510fc73da7e020a69b8d36431ec59fc847c3b64))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.138-8.5 ([0abc5b7](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/0abc5b7ed3e769187e0293ffa38d9b3377bcc15e))
+
 ## [1.0.8](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.7...v1.0.8) (2026-11-06)
 
 ### :repeat: Chores
