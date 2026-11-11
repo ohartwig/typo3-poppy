@@ -12,11 +12,15 @@ use Koh\Poppy\Server\Model\AccountToken;
 use Koh\Poppy\Server\Model\Session;
 use Koh\Poppy\Server\Storage\PoppyStorage;
 use Koh\Poppy\Typo3\Http\EndpointsMiddleware;
+use Koh\Poppy\Typo3\Http\PageView;
+use Koh\Poppy\Typo3\Http\PagesMiddleware;
 use Koh\Poppy\Typo3\Tests\Functional\Support\PersonalAgent;
 use Koh\Poppy\Typo3\Tests\Functional\Support\TestDoubles;
 use PHPUnit\Framework\Attributes\Test;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Configuration\SiteWriter;
+use TYPO3\CMS\Core\Core\SystemEnvironmentBuilder;
+use TYPO3\CMS\Core\Http\ServerRequest;
 use TYPO3\CMS\Core\Http\Stream;
 use TYPO3\CMS\Core\Site\SiteFinder;
 use TYPO3\TestingFramework\Core\Functional\Framework\Frontend\InternalRequest;
@@ -372,6 +376,30 @@ final class PoppyTest extends FunctionalTestCase
         $done = $this->postAs($login, '/poppy/account/agents', ['client_id' => $this->agent->clientId, '_token' => $this->formToken($html)]);
         self::assertSame(303, $done->getStatusCode());
         self::assertNotNull($storage->findAccountToken('act_1')?->revokedAt);
+    }
+
+    #[Test]
+    public function thePageViewIsBuiltOnlyWhenAPageRenders(): void
+    {
+        $this->writeSite();
+        $reflection = new \ReflectionClass(PageView::class);
+        $view = (new \ReflectionProperty(PagesMiddleware::class, 'view'))->getValue($this->service(PagesMiddleware::class));
+        self::assertInstanceOf(PageView::class, $view);
+        // PagesMiddleware sits in every frontend request; only the four Poppy
+        // pages use the view, so it is not built with the middleware.
+        self::assertTrue($reflection->isUninitializedLazyObject($view));
+
+        // Used, it renders as before.
+        $site = $this->service(SiteFinder::class)->getSiteByIdentifier('acme');
+        $request = (new ServerRequest(self::BASE . '/poppy/device'))
+            ->withAttribute('site', $site)
+            ->withAttribute('language', $site->getDefaultLanguage())
+            ->withAttribute('applicationType', SystemEnvironmentBuilder::REQUESTTYPE_FE);
+        $response = $view->render($request, 'Error', ['message' => 'Rendered lazily.'], 404);
+        self::assertFalse($reflection->isUninitializedLazyObject($view));
+        self::assertSame(404, $response->getStatusCode());
+        self::assertSame('no-store, private', $response->getHeaderLine('Cache-Control'));
+        self::assertStringContainsString('<p>Rendered lazily.</p>', (string) $response->getBody());
     }
 
     #[Test]
