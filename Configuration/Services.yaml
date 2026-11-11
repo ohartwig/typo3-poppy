@@ -41,6 +41,12 @@ services:
   Koh\Poppy\Server\BrowserCookie:
     factory: ['Koh\Poppy\Typo3\Poppy\Infrastructure', 'browserCookie']
 
+  # Built only when one of the four /poppy/* pages renders: PagesMiddleware
+  # sits in every frontend request, and an eager PageView would build the Fluid
+  # view factory behind it for each of them.
+  Koh\Poppy\Typo3\Http\PageView:
+    lazy: true
+
   Koh\Poppy\Typo3\Poppy\CompanyResolver:
     public: true
     arguments:
