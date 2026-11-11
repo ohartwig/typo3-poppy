@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.0.10](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.9...v1.0.10) (2026-11-11)
+
+### :fast_forward: Performance
+
+* **pages:** build the page view only when a Poppy page renders ([41eb620](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/41eb620a0c34043273f8a24f6cccf33ea078c666))
+
 ## [1.0.9](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.8...v1.0.9) (2026-11-09)
 
 ### :repeat: Chores
