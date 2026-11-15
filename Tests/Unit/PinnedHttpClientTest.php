@@ -86,15 +86,19 @@ final class PinnedHttpClientTest extends TestCase
     }
 
     #[Test]
-    public function withoutItsOwnProxyNoProxyOptionIsSet(): void
+    public function withoutItsOwnProxyTheInstallationsProxyStays(): void
     {
-        $client = new PinnedHttpClient($this->guzzle(), static fn(): array => ['93.184.216.34']);
+        // A fixed client default instead of whatever HTTPS_PROXY the test
+        // runner happens to carry.
+        $installation = ['https' => 'http://installation-proxy:3128'];
+        $client = new PinnedHttpClient($this->guzzle(['proxy' => $installation]), static fn(): array => ['93.184.216.34']);
         $client->sendRequest(new Request('GET', 'https://agent.example/agent.json'));
 
-        self::assertArrayNotHasKey('proxy', $this->sent[0]);
+        self::assertSame($installation, $this->sent[0]['proxy']);
     }
 
-    private function guzzle(): Client
+    /** @param array<string, mixed> $config */
+    private function guzzle(array $config = []): Client
     {
         $handler = function (RequestInterface $request, array $options): FulfilledPromise {
             /** @var array<string, mixed> $options */
@@ -103,6 +107,6 @@ final class PinnedHttpClientTest extends TestCase
             return new FulfilledPromise(new Response(200, [], '{}'));
         };
 
-        return new Client(['handler' => HandlerStack::create($handler)]);
+        return new Client(['handler' => HandlerStack::create($handler)] + $config);
     }
 }
