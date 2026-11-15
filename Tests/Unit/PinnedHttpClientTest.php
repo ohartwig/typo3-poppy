@@ -97,6 +97,22 @@ final class PinnedHttpClientTest extends TestCase
         self::assertSame($installation, $this->sent[0]['proxy']);
     }
 
+    #[Test]
+    public function readsItsOwnProxyFromTheEnvironmentValue(): void
+    {
+        self::assertNull(PinnedHttpClient::ownProxyFrom(false));
+        self::assertNull(PinnedHttpClient::ownProxyFrom('  '));
+        self::assertSame('http://egress-proxy:3129', PinnedHttpClient::ownProxyFrom(' http://egress-proxy:3129 '));
+        self::assertSame('https://proxy.example:8443', PinnedHttpClient::ownProxyFrom('https://proxy.example:8443'));
+    }
+
+    #[Test]
+    public function refusesAnOwnProxyThatIsNoHttpUrl(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        PinnedHttpClient::ownProxyFrom('socks5://egress-proxy:3129');
+    }
+
     /** @param array<string, mixed> $config */
     private function guzzle(array $config = []): Client
     {

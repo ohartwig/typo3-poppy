@@ -41,6 +41,27 @@ final readonly class PinnedHttpClient implements ClientInterface
         private ?string $proxy = null,
     ) {}
 
+    /**
+     * Reads the fetcher's own proxy (the value of KOH_POPPY_PROXY): an
+     * http:// or https:// URL. Unset or empty means null, so TYPO3's HTTP
+     * settings apply as before. Anything else is refused, so a typo cannot
+     * silently route the fetch elsewhere.
+     */
+    public static function ownProxyFrom(mixed $value): ?string
+    {
+        if (!is_string($value) || trim($value) === '') {
+            return null;
+        }
+        $value = trim($value);
+        $scheme = parse_url($value, PHP_URL_SCHEME);
+        $host = parse_url($value, PHP_URL_HOST);
+        if (!in_array($scheme, ['http', 'https'], true) || !is_string($host) || $host === '') {
+            throw new \InvalidArgumentException('KOH_POPPY_PROXY must be an http:// or https:// URL.');
+        }
+
+        return $value;
+    }
+
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $options = [
