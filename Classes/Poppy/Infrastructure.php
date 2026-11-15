@@ -63,6 +63,7 @@ final class Infrastructure
     public static function fetcher(GuzzleClientFactory $clients, RequestFactory $requests, CacheManager $caches): JsonFetcher
     {
         $proxy = self::configuration('HTTP', 'proxy');
+        $own = PinnedHttpClient::ownProxyFrom(getenv('KOH_POPPY_PROXY'));
         $resolver = static function (string $host): array {
             $records = @dns_get_record($host, DNS_A | DNS_AAAA);
             $addresses = [];
@@ -77,7 +78,7 @@ final class Infrastructure
         };
 
         return new JsonFetcher(
-            new PinnedHttpClient($clients->getClient(), $resolver, $proxy !== null && $proxy !== '' && $proxy !== []),
+            new PinnedHttpClient($clients->getClient(), $resolver, $proxy !== null && $proxy !== '' && $proxy !== [], $own),
             $requests,
             new PublicAddressGuard($resolver),
             new CacheDocumentCache($caches->getCache(self::CACHE)),

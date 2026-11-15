@@ -74,7 +74,47 @@ final class PinnedHttpClientTest extends TestCase
         self::assertFalse($this->sent[0]['allow_redirects']);
     }
 
-    private function guzzle(): Client
+    #[Test]
+    public function itsOwnProxyWinsAndNothingIsPinned(): void
+    {
+        $client = new PinnedHttpClient($this->guzzle(), static fn(): array => throw new \LogicException('must not resolve'), proxy: 'http://egress-proxy:3129');
+        $client->sendRequest(new Request('GET', 'https://agent.example/agent.json'));
+
+        self::assertSame(['http' => 'http://egress-proxy:3129', 'https' => 'http://egress-proxy:3129'], $this->sent[0]['proxy']);
+        self::assertArrayNotHasKey('curl', $this->sent[0]);
+        self::assertFalse($this->sent[0]['allow_redirects']);
+    }
+
+    #[Test]
+    public function withoutItsOwnProxyTheInstallationsProxyStays(): void
+    {
+        // A fixed client default instead of whatever HTTPS_PROXY the test
+        // runner happens to carry.
+        $installation = ['https' => 'http://installation-proxy:3128'];
+        $client = new PinnedHttpClient($this->guzzle(['proxy' => $installation]), static fn(): array => ['93.184.216.34']);
+        $client->sendRequest(new Request('GET', 'https://agent.example/agent.json'));
+
+        self::assertSame($installation, $this->sent[0]['proxy']);
+    }
+
+    #[Test]
+    public function readsItsOwnProxyFromTheEnvironmentValue(): void
+    {
+        self::assertNull(PinnedHttpClient::ownProxyFrom(false));
+        self::assertNull(PinnedHttpClient::ownProxyFrom('  '));
+        self::assertSame('http://egress-proxy:3129', PinnedHttpClient::ownProxyFrom(' http://egress-proxy:3129 '));
+        self::assertSame('https://proxy.example:8443', PinnedHttpClient::ownProxyFrom('https://proxy.example:8443'));
+    }
+
+    #[Test]
+    public function refusesAnOwnProxyThatIsNoHttpUrl(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        PinnedHttpClient::ownProxyFrom('socks5://egress-proxy:3129');
+    }
+
+    /** @param array<string, mixed> $config */
+    private function guzzle(array $config = []): Client
     {
         $handler = function (RequestInterface $request, array $options): FulfilledPromise {
             /** @var array<string, mixed> $options */
@@ -83,6 +123,6 @@ final class PinnedHttpClientTest extends TestCase
             return new FulfilledPromise(new Response(200, [], '{}'));
         };
 
-        return new Client(['handler' => HandlerStack::create($handler)]);
+        return new Client(['handler' => HandlerStack::create($handler)] + $config);
     }
 }
