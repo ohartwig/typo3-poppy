@@ -2,6 +2,20 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.0](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.10...v1.1.0) (2026-11-15)
+
+### :sparkles: Features
+
+* **http:** own proxy for the agent metadata fetch (KOH_POPPY_PROXY) ([0c2f83f](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/0c2f83f5577ed8415f4dd012b2774c17cd630532))
+
+### :zap: Refactor
+
+* **http:** parse KOH_POPPY_PROXY in PinnedHttpClient, unit-tested ([8bbda7a](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/8bbda7a7e094a10fcb48566b79e60aa54b6f8921))
+
+### :white_check_mark: Tests
+
+* **http:** fixed client proxy instead of the runner's HTTPS_PROXY ([06e8d98](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/06e8d980c56b626e5442b3e5e9eee0946ab4504d))
+
 ## [1.0.10](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.9...v1.0.10) (2026-11-11)
 
 ### :fast_forward: Performance
