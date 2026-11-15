@@ -63,6 +63,7 @@ final class Infrastructure
     public static function fetcher(GuzzleClientFactory $clients, RequestFactory $requests, CacheManager $caches): JsonFetcher
     {
         $proxy = self::configuration('HTTP', 'proxy');
+        $own = self::ownProxy();
         $resolver = static function (string $host): array {
             $records = @dns_get_record($host, DNS_A | DNS_AAAA);
             $addresses = [];
@@ -77,7 +78,7 @@ final class Infrastructure
         };
 
         return new JsonFetcher(
-            new PinnedHttpClient($clients->getClient(), $resolver, $proxy !== null && $proxy !== '' && $proxy !== []),
+            new PinnedHttpClient($clients->getClient(), $resolver, $proxy !== null && $proxy !== '' && $proxy !== [], $own),
             $requests,
             new PublicAddressGuard($resolver),
             new CacheDocumentCache($caches->getCache(self::CACHE)),
@@ -111,6 +112,26 @@ final class Infrastructure
     public static function browserCookie(): BrowserCookie
     {
         return new BrowserCookie(hash_hmac('sha256', 'koh-poppy-browser-cookie', self::secret(), true));
+    }
+
+    /**
+     * The fetcher's own proxy, KOH_POPPY_PROXY: an http:// or https:// URL.
+     * Unset or empty means TYPO3's HTTP settings apply as before. Anything
+     * else is refused, so a typo cannot silently route the fetch elsewhere.
+     */
+    private static function ownProxy(): ?string
+    {
+        $value = getenv('KOH_POPPY_PROXY');
+        if (!is_string($value) || trim($value) === '') {
+            return null;
+        }
+        $value = trim($value);
+        $scheme = parse_url($value, PHP_URL_SCHEME);
+        if (!in_array($scheme, ['http', 'https'], true) || parse_url($value, PHP_URL_HOST) === null) {
+            throw new \RuntimeException('KOH_POPPY_PROXY must be an http:// or https:// URL.');
+        }
+
+        return $value;
     }
 
     private static function configuration(string $section, string $key): mixed

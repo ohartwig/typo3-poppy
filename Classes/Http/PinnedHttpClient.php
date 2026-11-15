@@ -25,6 +25,11 @@ use Psr\Http\Message\ResponseInterface;
  * to exactly that address (CURLOPT_RESOLVE), so a DNS answer that changes
  * between check and connect changes nothing. Through a proxy the proxy
  * resolves and cannot be pinned; the pre-flight check still applies there.
+ *
+ * $proxy is the fetcher's own proxy (KOH_POPPY_PROXY), set as the request's
+ * proxy for both schemes so it wins over TYPO3's HTTP settings and over
+ * HTTPS_PROXY: an egress proxy that admits only listed hosts cannot admit an
+ * agent's domain, which is whatever the agent says it is.
  */
 final readonly class PinnedHttpClient implements ClientInterface
 {
@@ -33,6 +38,7 @@ final readonly class PinnedHttpClient implements ClientInterface
         private GuzzleClient $guzzle,
         private \Closure $resolver,
         private bool $proxied = false,
+        private ?string $proxy = null,
     ) {}
 
     public function sendRequest(RequestInterface $request): ResponseInterface
@@ -45,8 +51,12 @@ final readonly class PinnedHttpClient implements ClientInterface
             RequestOptions::HEADERS => ['User-Agent' => 'koh-typo3-poppy (+https://github.com/ohartwig/typo3-poppy)'],
         ];
 
+        if ($this->proxy !== null) {
+            $options[RequestOptions::PROXY] = ['http' => $this->proxy, 'https' => $this->proxy];
+        }
+
         $host = $request->getUri()->getHost();
-        if (!$this->proxied && filter_var(trim($host, '[]'), FILTER_VALIDATE_IP) === false) {
+        if (!$this->proxied && $this->proxy === null && filter_var(trim($host, '[]'), FILTER_VALIDATE_IP) === false) {
             $addresses = ($this->resolver)($host);
             foreach ($addresses as $address) {
                 if (!PublicAddressGuard::isPublic($address)) {

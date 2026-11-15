@@ -74,6 +74,26 @@ final class PinnedHttpClientTest extends TestCase
         self::assertFalse($this->sent[0]['allow_redirects']);
     }
 
+    #[Test]
+    public function itsOwnProxyWinsAndNothingIsPinned(): void
+    {
+        $client = new PinnedHttpClient($this->guzzle(), static fn(): array => throw new \LogicException('must not resolve'), proxy: 'http://egress-proxy:3129');
+        $client->sendRequest(new Request('GET', 'https://agent.example/agent.json'));
+
+        self::assertSame(['http' => 'http://egress-proxy:3129', 'https' => 'http://egress-proxy:3129'], $this->sent[0]['proxy']);
+        self::assertArrayNotHasKey('curl', $this->sent[0]);
+        self::assertFalse($this->sent[0]['allow_redirects']);
+    }
+
+    #[Test]
+    public function withoutItsOwnProxyNoProxyOptionIsSet(): void
+    {
+        $client = new PinnedHttpClient($this->guzzle(), static fn(): array => ['93.184.216.34']);
+        $client->sendRequest(new Request('GET', 'https://agent.example/agent.json'));
+
+        self::assertArrayNotHasKey('proxy', $this->sent[0]);
+    }
+
     private function guzzle(): Client
     {
         $handler = function (RequestInterface $request, array $options): FulfilledPromise {

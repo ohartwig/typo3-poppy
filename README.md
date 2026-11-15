@@ -108,6 +108,11 @@ The user returns from the login page through `redirect_url`, so felogin needs
   short timeouts and the address pinned (`CURLOPT_RESOLVE`) after a check that
   it is public. Through a configured proxy the proxy resolves and only the
   pre-flight check applies.
+- `KOH_POPPY_PROXY` (an `http://` URL in the environment) gives the metadata
+  fetch a proxy of its own, ahead of TYPO3's `HTTP.proxy` and `HTTPS_PROXY`.
+  It exists for installations whose egress proxy admits only listed hosts: an
+  agent's domain cannot be listed, so the fetch goes to a proxy port that
+  admits any host and logs it, while everything else stays on the strict one.
 
 ## Licence
 
