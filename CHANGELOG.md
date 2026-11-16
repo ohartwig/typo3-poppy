@@ -2,6 +2,13 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.1](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.0...v1.1.1) (2026-11-16)
+
+### :repeat: Chores
+
+* **deps:** update dependency infection/infection to ^0.35.11 ([c6d5804](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/c6d58044a8e37224719bb8e0bef596d845c73b60))
+* **deps:** update dependency registry.ole-hartwig.eu/devops/images/franken-php/ci to v3.2.246-8.5 ([525cb50](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/525cb5035d3e99bd694622a341b635f40425b53e))
+
 ## [1.1.0](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.0.10...v1.1.0) (2026-11-15)
 
 ### :sparkles: Features
