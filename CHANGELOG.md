@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.2](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.1...v1.1.2) (2026-11-17)
+
+### :repeat: Chores
+
+* **deps:** update dependency phpstan/phpstan to ^2.3.6 ([cfb7226](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/cfb72268d81adf970182477d7f36e1cd74fc4c69))
+
 ## [1.1.1](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.0...v1.1.1) (2026-11-16)
 
 ### :repeat: Chores
