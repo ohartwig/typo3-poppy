@@ -2,6 +2,16 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.4](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.3...v1.1.4) (2026-11-18)
+
+### :memo: Documentation
+
+* send contributors to GitHub, where the tracker is ([a92d509](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/a92d5095d924faa698ae553fc02c5fcfe982c4ac))
+
+### :repeat: Chores
+
+* **composer:** alias dev-main to 1.1-dev ([7bf3618](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/7bf36182e21c7020a4c1e94ea9e68f3a4845d999))
+
 ## [1.1.3](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.2...v1.1.3) (2026-11-18)
 
 ### :bug: Fixes
