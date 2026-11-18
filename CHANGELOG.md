@@ -2,6 +2,16 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.3](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.2...v1.1.3) (2026-11-18)
+
+### :bug: Fixes
+
+* **composer:** point homepage at the package page ([80873ca](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/80873caf287cb9131f4ad13e19309bff2560ffa6))
+
+### :repeat: Chores
+
+* **deps:** update dependency infection/infection to ^0.35.12 ([a55dc23](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/a55dc23843d729a202aa4423ea367ca9a7f64466))
+
 ## [1.1.2](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.1...v1.1.2) (2026-11-17)
 
 ### :repeat: Chores
