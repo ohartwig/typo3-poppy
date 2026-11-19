@@ -26,7 +26,7 @@
     "require": {
         "php": "^8.5.12",
         "doctrine/dbal": "^4.0",
-        "guzzlehttp/guzzle": "^7.16.1",
+        "guzzlehttp/guzzle": "^7.16.3",
         "koh/poppy": "^1.1",
         "psr/clock": "^1.0.0",
         "psr/http-client": "^1.0.3",
