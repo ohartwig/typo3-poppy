@@ -2,6 +2,12 @@
 
 All notable changes are recorded here by the release tooling.
 
+## [1.1.5](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.4...v1.1.5) (2026-11-19)
+
+### :bug: Fixes
+
+* **deps:** update dependency guzzlehttp/guzzle to ^7.16.3 ([4e0d999](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/commit/4e0d99947a4a07cc4fca6aa56040a1d8f24a3add))
+
 ## [1.1.4](https://git.ole-hartwig.eu/ai-ready-platform/platform/typo3-poppy/compare/v1.1.3...v1.1.4) (2026-11-18)
 
 ### :memo: Documentation
